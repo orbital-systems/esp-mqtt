@@ -310,6 +310,9 @@ typedef struct esp_mqtt_client_config_t {
                    available in some Espressif devices.  It's not copied nor freed by the client, user needs to clean up.*/
             bool use_ecdsa_peripheral; /*!< Enable ECDSA peripheral, available in some Espressif devices. */
             uint8_t ecdsa_key_efuse_blk; /*!< ECDSA key block number from efuse, available in some Espressif devices. */
+#ifdef CONFIG_ATECC608A_RUNTIME_SELECTION
+            uint8_t atecc608a_i2c_addr; /*!< I2C address for the ATECC608A chip that is being used */
+#endif // CONFIG_ATECC608A_RUNTIME_SELECTION
         } authentication; /*!< Client authentication */
     } credentials; /*!< User credentials for broker */
     /**

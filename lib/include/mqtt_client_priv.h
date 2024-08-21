@@ -103,6 +103,9 @@ typedef struct {
     esp_transport_handle_t transport;
     struct ifreq * if_name;
     esp_transport_keep_alive_t tcp_keep_alive_cfg;
+#ifdef CONFIG_ATECC608A_RUNTIME_SELECTION
+    uint8_t atecc608a_i2c_addr;
+#endif // CONFIG_ATECC608A_RUNTIME_SELECTION
 } mqtt_config_storage_t;
 
 typedef enum {
