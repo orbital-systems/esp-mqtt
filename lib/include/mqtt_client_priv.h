@@ -100,6 +100,9 @@ typedef struct {
     uint64_t outbox_limit;
     esp_transport_handle_t transport;
     struct ifreq * if_name;
+#ifdef CONFIG_ATECC608A_RUNTIME_SELECTION
+    uint8_t atecc608a_i2c_addr;
+#endif // CONFIG_ATECC608A_RUNTIME_SELECTION
 } mqtt_config_storage_t;
 
 typedef enum {

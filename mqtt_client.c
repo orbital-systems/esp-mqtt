@@ -207,7 +207,11 @@ static esp_err_t esp_mqtt_set_ssl_transport_properties(esp_transport_list_handle
     if (cfg->use_secure_element) {
 #ifdef MQTT_SUPPORTED_FEATURE_SECURE_ELEMENT
 #ifdef CONFIG_ESP_TLS_USE_SECURE_ELEMENT
+#ifdef CONFIG_ATECC608A_RUNTIME_SELECTION
+        esp_transport_ssl_use_secure_element(ssl, cfg->atecc608a_i2c_addr);
+#else
         esp_transport_ssl_use_secure_element(ssl);
+#endif
 #else
         ESP_LOGE(TAG, "Secure element not enabled for esp-tls in menuconfig");
         goto esp_mqtt_set_transport_failed;
@@ -565,6 +569,9 @@ esp_err_t esp_mqtt_set_config(esp_mqtt_client_handle_t client, const esp_mqtt_cl
     client->config->skip_cert_common_name_check = config->broker.verification.skip_cert_common_name_check;
     client->config->common_name = config->broker.verification.common_name;
     client->config->use_secure_element = config->credentials.authentication.use_secure_element;
+#ifdef CONFIG_ATECC608A_RUNTIME_SELECTION
+    client->config->atecc608a_i2c_addr = config->credentials.authentication.atecc608a_i2c_addr;
+#endif // CONFIG_ATECC608A_RUNTIME_SELECTION
     client->config->ds_data = config->credentials.authentication.ds_data;
 
     if (config->credentials.authentication.key_password && config->credentials.authentication.key_password_len) {
